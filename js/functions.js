@@ -5,7 +5,7 @@ const checkStringLength = function (str, stringLength) {
   return str.length >= stringLength;
 };
 
-console.log(checkStringLength('строка', 6));
+checkStringLength('строка', 6);
 
 // Функция для проверки, является ли строка палиндромом.
 
@@ -14,7 +14,7 @@ const checkPalindrom = function (str) {
   return str === str.split('').reverse().join('');
 };
 
-console.log(checkPalindrom('Анна'));
+checkPalindrom('Анна');
 
 // /* Функция, которая принимает строку, извлекает содержащиеся в ней цифры от 0 до 9
 // и возвращает их в виде целого положительного числа. */
@@ -30,7 +30,7 @@ const getNumberInString = function (str) {
   return str;
 };
 
-console.log(getNumberInString(2.45));
+getNumberInString(2.45);
 
 // /* Функция, которая принимает три параметра: исходную строку, минимальную длину и строку с добавочными символами
 // и возвращает исходную строку, дополненную указанными символами до заданной длины. */
@@ -45,4 +45,4 @@ const getAddedString = function (str, minLength, strAdd) {
   return (strAdd.slice(0, n % strAdd.length) + strAdd.repeat(n / strAdd.length) + str);
 };
 
-console.log(getAddedString('q', 4, 'we'));
+getAddedString('q', 4, 'we');
