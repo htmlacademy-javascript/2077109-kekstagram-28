@@ -2,29 +2,22 @@
 
 const checkStringLength = function (str, stringLength) {
   str = str.toString();
-  if (str.length >= stringLength) {
-    return true;
-  }
-  return false;
+  return str.length >= stringLength;
 };
 
-checkStringLength();
+console.log(checkStringLength('строка', 6));
 
 // Функция для проверки, является ли строка палиндромом.
 
 const checkPalindrom = function (str) {
   str = str.toLowerCase().replaceAll(' ', '');
-  if (str === str.split('').reverse().join('')) {
-    return true;
-  }
-  return false;
+  return str === str.split('').reverse().join('');
 };
 
-checkPalindrom();
-// console.log(checkPalindrom('Анна'));
+console.log(checkPalindrom('Анна'));
 
-/* Функция, которая принимает строку, извлекает содержащиеся в ней цифры от 0 до 9
-и возвращает их в виде целого положительного числа. */
+// /* Функция, которая принимает строку, извлекает содержащиеся в ней цифры от 0 до 9
+// и возвращает их в виде целого положительного числа. */
 
 const getNumberInString = function (str) {
   if (Number.isInteger(str) || Number.parseFloat(str)) {
@@ -37,14 +30,19 @@ const getNumberInString = function (str) {
   return str;
 };
 
-getNumberInString();
+console.log(getNumberInString(2.45));
 
-/* Функция, которая принимает три параметра: исходную строку, минимальную длину и строку с добавочными символами
-и возвращает исходную строку, дополненную указанными символами до заданной длины. */
+// /* Функция, которая принимает три параметра: исходную строку, минимальную длину и строку с добавочными символами
+// и возвращает исходную строку, дополненную указанными символами до заданной длины. */
 
 const getAddedString = function (str, minLength, strAdd) {
-  str = str.padStart(minLength, strAdd);
-  return str;
+  const n = minLength - str.length;
+
+  if (n <= 0) {
+    return str;
+  }
+
+  return (strAdd.slice(0, n % strAdd.length) + strAdd.repeat(n / strAdd.length) + str);
 };
 
-getAddedString();
+console.log(getAddedString('q', 4, 'we'));
