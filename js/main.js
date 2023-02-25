@@ -36,23 +36,54 @@ const getRandomInteger = (a, b) => {
 const getRandomArrayElement = (elements) =>
   elements[getRandomInteger(0, elements.length - 1)];
 
-const createDescriptionPhoto = function () {
+function createRandomIdFromRangeGenerator(a, b) {
+  const previousValues = [];
+
+  return function () {
+    let currentValue = getRandomInteger(a, b);
+
+    if (previousValues.length >= b - a + 1) {
+      return null;
+    }
+
+    while (previousValues.includes(currentValue)) {
+      currentValue = getRandomInteger(a, b);
+    }
+    previousValues.push(currentValue);
+    return currentValue;
+  };
+}
+
+const generatePhotoId = createRandomIdFromRangeGenerator(1, 25);
+const generateId = createRandomIdFromRangeGenerator(1, 25);
+const generateCommentsId = createRandomIdFromRangeGenerator(1, 999);
+
+const createComments = function () {
   return {
-    id: getRandomInteger(1, 25),
-    url: `photos/${getRandomInteger(1, 25)}.jpg`,
-    description: getRandomArrayElement(DESCRIPTION),
-    likes: getRandomInteger(15, 200),
-    comments: [
-      { id: getRandomInteger(1, 999) },
-      { avatar: `img/avatar-${getRandomInteger(1, 6)}.svg` },
-      { message: getRandomArrayElement(MESSAGE) },
-      { name: getRandomArrayElement(NAME) },
-    ],
+    id: generateCommentsId(),
+    avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
+    message: getRandomArrayElement(MESSAGE),
+    name: getRandomArrayElement(NAME),
   };
 };
 
-const arrayDescriptionPhoto = Array.from({ length: 25 }, createDescriptionPhoto);
+const createDescriptionPhoto = function () {
+  return {
+    id: generateId(),
+    url: `photos/${generatePhotoId()}.jpg`,
+    description: getRandomArrayElement(DESCRIPTION),
+    likes: getRandomInteger(15, 200),
+    comments: (arrayCommentsPhoto = Array.from(        /* eslint-disable-line */
+      { length: getRandomInteger(1, 16) },
+      createComments
+    )),
+  };
+};
 
-// Я знаю, это не функция, просто чтоб линтер не ругался:)
-arrayDescriptionPhoto();
+const arrayDescriptionPhoto = Array.from(
+  { length: 25 },
+  createDescriptionPhoto
+);
 
+
+console.log(arrayDescriptionPhoto);    /* eslint-disable-line */ 
