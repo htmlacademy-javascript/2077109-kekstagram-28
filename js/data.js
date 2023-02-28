@@ -1,7 +1,7 @@
 import {getRandomArrayElement} from './util.js';
 import {getRandomInteger} from './util.js';
 
-const DESCRIPTION = [
+const DESCRIPTIONS = [
   'На отдыхе',
   'На работе',
   'На тренировке',
@@ -9,7 +9,7 @@ const DESCRIPTION = [
   'В школе',
 ];
 
-const NAME = [
+const NAMES = [
   'Александр',
   'Никита',
   'Иван',
@@ -20,7 +20,7 @@ const NAME = [
   'Юлия',
 ];
 
-const MESSAGE = [
+const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -32,7 +32,7 @@ const MESSAGE = [
 const createRandomIdFromRangeGenerator = (a, b) => {
   const previousValues = [];
 
-  return function () {
+  return () => {
     let currentValue = getRandomInteger(a, b);
 
     if (previousValues.length >= b - a + 1) {
@@ -54,14 +54,14 @@ const generateCommentsId = createRandomIdFromRangeGenerator(1, 999);
 const createComments = () => ({
   id: generateCommentsId(),
   avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
-  message: getRandomArrayElement(MESSAGE),
-  name: getRandomArrayElement(NAME),
+  message: getRandomArrayElement(MESSAGES),
+  name: getRandomArrayElement(NAMES),
 });
 
 const createDescriptionsPhoto = () => ({
   id: generateId(),
   url: `photos/${generatePhotoId()}.jpg`,
-  description: getRandomArrayElement(DESCRIPTION),
+  description: getRandomArrayElement(DESCRIPTIONS),
   likes: getRandomInteger(15, 200),
   comments: Array.from({ length: getRandomInteger(1, 16) }, createComments),
 });
