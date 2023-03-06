@@ -1,4 +1,4 @@
-import {createArrayDescriptionsPhoto} from './data.js';
+import './data.js';
 import './util.js';
+import './miniatures.js';
 
-console.log(createArrayDescriptionsPhoto()); /* eslint-disable-line */

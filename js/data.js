@@ -72,5 +72,3 @@ const createArrayDescriptionsPhoto = () => Array.from(
 );
 
 export {createArrayDescriptionsPhoto};
-
-console.log(createArrayDescriptionsPhoto()); /* eslint-disable-line */
