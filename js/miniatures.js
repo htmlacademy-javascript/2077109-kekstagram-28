@@ -14,7 +14,7 @@ const getRenderingMiniatures = () => {
     pictureRenderingFragment.appendChild(userPictureElement);
   });
 
-  picturesContainer.appendChild(pictureRenderingFragment);
+  return picturesContainer.appendChild(pictureRenderingFragment);
 };
 
 export {getRenderingMiniatures};
