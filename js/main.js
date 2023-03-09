@@ -1,5 +1,9 @@
+import { createArrayDescriptionsPhoto } from './data.js';
+import { createMiniatures } from './miniatures.js';
 import './data.js';
 import './util.js';
 import './miniatures.js';
-import { getRenderingMiniatures } from './miniatures.js';
-getRenderingMiniatures();
+const pictures = createArrayDescriptionsPhoto();
+createMiniatures(pictures);
+
+
