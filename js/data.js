@@ -1,5 +1,6 @@
 import {getRandomArrayElement} from './util.js';
 import {getRandomInteger} from './util.js';
+import { idPhoto } from './util.js';
 
 const DESCRIPTIONS = [
   'На отдыхе',
@@ -48,7 +49,6 @@ const createRandomIdFromRangeGenerator = (a, b) => {
 };
 
 const generatePhotoId = createRandomIdFromRangeGenerator(1, 25);
-const generateId = createRandomIdFromRangeGenerator(1, 25);
 const generateCommentsId = createRandomIdFromRangeGenerator(1, 999);
 
 const createComments = () => ({
@@ -59,7 +59,7 @@ const createComments = () => ({
 });
 
 const createDescriptionsPhoto = () => ({
-  id: generateId(),
+  id: idPhoto() - 1,
   url: `photos/${generatePhotoId()}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
   likes: getRandomInteger(15, 200),

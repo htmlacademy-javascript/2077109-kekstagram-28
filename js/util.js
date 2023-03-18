@@ -64,3 +64,30 @@ const getRandomArrayElement = (elements) =>
   elements[getRandomInteger(0, elements.length - 1)];
 
 export {getRandomArrayElement};
+
+// Функция для удаления коментариев.
+
+const clearComments = (container) => {
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
+  }
+};
+
+export {clearComments};
+
+// Функция для проверки нажатия клавиши.
+
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {isEscapeKey};
+
+// Функция, которая возвращает порядковый номер.
+
+let serialNumber = 0;
+
+const idPhoto = () => {
+  serialNumber += 1;
+  return serialNumber;
+};
+
+export {idPhoto};
