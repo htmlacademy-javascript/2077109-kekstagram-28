@@ -1,4 +1,3 @@
-import { picturesContainer } from './miniatures.js';
 import { clearComments } from './util.js';
 import { isEscapeKey } from './util.js';
 
@@ -14,18 +13,11 @@ const body = document.querySelector('body');
 const bigPictureModalCancel = document.querySelector('.big-picture__cancel');
 
 const templateComment = document.querySelector('#comments').content;
-const comentRenderFragment = document.createDocumentFragment();
+const comentFragment = document.createDocumentFragment();
 
 clearComments(commentsContainer);
 
-const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    closeBigPictureModal();
-  }
-};
-
-function closeBigPictureModal () {
+const closeBigPictureModal = () => {
   bigPictureModal.classList.add('hidden');
   body.classList.remove('modal-open');
   clearComments(commentsContainer);
@@ -33,9 +25,16 @@ function closeBigPictureModal () {
   document.removeEventListener('keydown', onDocumentKeydown);
 
   bigPictureModalCancel.removeEventListener('click', closeBigPictureModal);
+};
+
+function onDocumentKeydown (evt) {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeBigPictureModal();
+  }
 }
 
-function openUBigPictureModal () {
+const openUBigPictureModal = () => {
   bigPictureModal.classList.remove('hidden');
   commentLoader.classList.add('hidden');
   socialCommentCount.classList.add('hidden');
@@ -44,24 +43,24 @@ function openUBigPictureModal () {
   bigPictureModalCancel.addEventListener('click', closeBigPictureModal);
 
   document.addEventListener('keydown', onDocumentKeydown);
-}
+};
 
-const renderComents = (arrElem) => {
-  arrElem.comments.forEach(({avatar, name, message}) => {
+const renderComents = (arrayPicturesElement) => {
+  arrayPicturesElement.comments.forEach(({avatar, name, message}) => {
     const userComment = templateComment.cloneNode(true);
     userComment.querySelector('.social__picture').src = avatar;
     userComment.querySelector('.social__picture').alt = name;
     userComment.querySelector('.social__text').textContent = message;
-    comentRenderFragment.appendChild(userComment);
+    comentFragment.appendChild(userComment);
   });
-  return commentsContainer.appendChild(comentRenderFragment);
+  return commentsContainer.appendChild(comentFragment);
 };
 
-const renderBigPhoto = (arr) => {
-  picturesContainer.addEventListener('click', (evt) => {
-    if (evt.target.closest('.picture')) {
-      const target = evt.target.closest('.picture');
-      const currentDescription = arr.find((item) => item.id === Number(target.dataset.pictureId));
+const renderBigPhoto = (arrayPictures, container) => {
+  container.addEventListener('click', (evt) => {
+    const target = evt.target.closest('.picture');
+    if (target) {
+      const currentDescription = arrayPictures.find((item) => item.id === Number(target.dataset.pictureId));
       bigPictureModalImg.src = currentDescription.url;
       commentsCount.textContent = currentDescription.comments.length;
       likesCount.textContent = currentDescription.likes;
