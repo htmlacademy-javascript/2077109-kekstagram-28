@@ -76,7 +76,7 @@ const renderBigPhoto = (arrayPictures, container) => {
         commentLoader.removeEventListener('click', createButtonCommentLoads);
       };
 
-      const openUBigPictureModal = () => {
+      const openBigPictureModal = () => {
         bigPictureModal.classList.remove('hidden');
         body.classList.add('modal-open');
 
@@ -86,7 +86,7 @@ const renderBigPhoto = (arrayPictures, container) => {
 
         document.addEventListener('keydown', onDocumentKeydown);
       };
-      openUBigPictureModal();
+      openBigPictureModal();
     }
   });
 };
