@@ -12,11 +12,12 @@ const commentLoader = bigPictureModal.querySelector('.comments-loader');
 const body = document.querySelector('body');
 const bigPictureModalCancel = document.querySelector('.big-picture__cancel');
 const templateComment = document.querySelector('#comments').content;
+let currentDescription;
 
 const COMMENT_IN_BLOCK = 5;
 let commentsShown = 0;
 
-const renderComents = (arrayCommentsElement) => {
+const renderComments = (arrayCommentsElement) => {
   const userComment = templateComment.cloneNode(true);
   userComment.querySelector('.social__picture').src = arrayCommentsElement.avatar;
   userComment.querySelector('.social__picture').alt = arrayCommentsElement.name;
@@ -25,67 +26,62 @@ const renderComents = (arrayCommentsElement) => {
   return userComment;
 };
 
+const createButtonCommentLoads = () => {
+  commentsShown += COMMENT_IN_BLOCK;
+
+  if (commentsShown >= currentDescription.comments.length) {
+    commentLoader.classList.add('hidden');
+    commentsShown = currentDescription.comments.length;
+  } else {
+    commentLoader.classList.remove('hidden');
+  }
+  const fragment = document.createDocumentFragment();
+  for (let i = 0; i < commentsShown; i++) {
+    const commentElement = renderComments(currentDescription.comments[i]);
+    fragment.append(commentElement);
+    renderComments(currentDescription.comments[i]);
+  }
+  commentsContainer.innerHTML = '';
+  commentsContainer.append(fragment);
+  socialCommentCount.innerHTML = `${commentsShown} из <span class="comments-count">${currentDescription.comments.length}</span> комментариев`;
+};
+
+const closeBigPictureModal = () => {
+  bigPictureModal.classList.add('hidden');
+  body.classList.remove('modal-open');
+  clearComments(commentsContainer);
+  commentsShown = 0;
+
+  commentLoader.removeEventListener('click', createButtonCommentLoads);
+};
+
+const onDocumentKeydown = (event) => {
+  if (isEscapeKey(event)) {
+    event.preventDefault();
+    closeBigPictureModal();
+  }
+};
+
+const openBigPictureModal = () => {
+  bigPictureModal.classList.remove('hidden');
+  body.classList.add('modal-open');
+
+  commentLoader.addEventListener('click', createButtonCommentLoads);
+};
+
+document.addEventListener('keydown', onDocumentKeydown);
+bigPictureModalCancel.addEventListener('click', closeBigPictureModal);
+
 const renderBigPhoto = (arrayPictures, container) => {
   container.addEventListener('click', (evt) => {
     const target = evt.target.closest('.picture');
     if (target) {
-      const currentDescription = arrayPictures.find((item) => item.id === Number(target.dataset.pictureId));
+      currentDescription = arrayPictures.find((item) => item.id === Number(target.dataset.pictureId));
       bigPictureModalImg.src = currentDescription.url;
-      commentsCount.textContent = currentDescription.comments.length;
+      commentsCount.textContent = currentDescription.comments.length.toString;
       likesCount.textContent = currentDescription.likes;
       socialCaption.textContent = currentDescription.description;
-
-      /* eslint-disable */
-      function onDocumentKeydown (evt) {
-        if (isEscapeKey(evt)) {
-          evt.preventDefault();
-          closeBigPictureModal();
-        }
-      }
-
-      const createButtonCommentLoads = () => {
-        commentsShown += COMMENT_IN_BLOCK;
-
-        if (commentsShown >= currentDescription.comments.length) {
-          commentLoader.classList.add('hidden');
-          commentsShown = currentDescription.comments.length;
-        } else {
-          commentLoader.classList.remove('hidden');
-        }
-        const fragment = document.createDocumentFragment();
-        for (let i = 0; i < commentsShown; i++) {
-          const commentElement = renderComents(currentDescription.comments[i]);
-          fragment.append(commentElement);
-          renderComents(currentDescription.comments[i]);
-        }
-        commentsContainer.innerHTML = '';
-        commentsContainer.append(fragment);
-        socialCommentCount.innerHTML = `${commentsShown} из <span class="comments-count">${currentDescription.comments.length}</span> комментариев`;
-      };
-
       createButtonCommentLoads();
-
-      const closeBigPictureModal = () => {
-        bigPictureModal.classList.add('hidden');
-        body.classList.remove('modal-open');
-        clearComments(commentsContainer);
-        commentsShown = 0;
-
-        document.removeEventListener('keydown', onDocumentKeydown);
-        bigPictureModalCancel.removeEventListener('click', closeBigPictureModal);
-        commentLoader.removeEventListener('click', createButtonCommentLoads);
-      };
-
-      const openBigPictureModal = () => {
-        bigPictureModal.classList.remove('hidden');
-        body.classList.add('modal-open');
-
-        bigPictureModalCancel.addEventListener('click', closeBigPictureModal);
-
-        commentLoader.addEventListener('click', createButtonCommentLoads);
-
-        document.addEventListener('keydown', onDocumentKeydown);
-      };
       openBigPictureModal();
     }
   });
