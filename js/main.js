@@ -1,7 +1,10 @@
-import { createArrayDescriptionsPhoto } from './data.js';
-import { createMiniatures} from './miniatures.js';
-import { picturesContainer } from './miniatures.js';
+import { createMiniatures, picturesContainer } from './show-miniatures.js';
 import { renderBigPhoto } from './show-full-size-photo.js';
+import { createArrayDescriptionsPhoto } from './data.js';
+import './show-modal-upload-img.js';
+import './add-effects.js';
+import './change-scale.js';
+import './validation.js';
 const pictures = createArrayDescriptionsPhoto();
 createMiniatures(pictures);
 renderBigPhoto(pictures, picturesContainer);

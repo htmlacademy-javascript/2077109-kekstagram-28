@@ -1,5 +1,4 @@
-import { clearComments } from './util.js';
-import { isEscapeKey } from './util.js';
+import { clearComments, isEscapeKey } from './utility.js';
 
 const bigPictureModal = document.querySelector('.big-picture');
 const bigPictureModalImg = bigPictureModal.querySelector('.big-picture__img').querySelector('img');
@@ -52,25 +51,26 @@ const closeBigPictureModal = () => {
   clearComments(commentsContainer);
   commentsShown = 0;
 
+  document.removeEventListener('keydown', onDocumentKeydown);
   commentLoader.removeEventListener('click', createButtonCommentLoads);
+  bigPictureModalCancel.removeEventListener('click', closeBigPictureModal);
 };
 
-const onDocumentKeydown = (event) => {
+function onDocumentKeydown (event) {
   if (isEscapeKey(event)) {
     event.preventDefault();
     closeBigPictureModal();
   }
-};
+}
 
 const openBigPictureModal = () => {
   bigPictureModal.classList.remove('hidden');
   body.classList.add('modal-open');
 
+  document.addEventListener('keydown', onDocumentKeydown);
   commentLoader.addEventListener('click', createButtonCommentLoads);
+  bigPictureModalCancel.addEventListener('click', closeBigPictureModal);
 };
-
-document.addEventListener('keydown', onDocumentKeydown);
-bigPictureModalCancel.addEventListener('click', closeBigPictureModal);
 
 const renderBigPhoto = (arrayPictures, container) => {
   container.addEventListener('click', (evt) => {

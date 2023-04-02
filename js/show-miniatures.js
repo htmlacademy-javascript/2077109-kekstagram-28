@@ -16,5 +16,4 @@ const createMiniatures = (array) => {
   return picturesContainer.appendChild(pictureRenderingFragment);
 };
 
-export {createMiniatures};
-export {picturesContainer};
+export {createMiniatures, picturesContainer};
