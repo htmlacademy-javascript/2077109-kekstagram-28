@@ -1,10 +1,13 @@
-import { createMiniatures, picturesContainer } from './show-miniatures.js';
-import { renderBigPhoto } from './show-full-size-photo.js';
+import { createMiniatures, picturesContainer } from './miniatures.js';
+import { renderBigPhoto } from './full-size-photo.js';
 import { createArrayDescriptionsPhoto } from './data.js';
-import './show-modal-upload-img.js';
-import './add-effects.js';
-import './change-scale.js';
-import './validation.js';
+import {openEditImgModal, uploadInput} from './modal-upload-img.js';
+
 const pictures = createArrayDescriptionsPhoto();
+
 createMiniatures(pictures);
 renderBigPhoto(pictures, picturesContainer);
+
+uploadInput.addEventListener('change', () => {
+  openEditImgModal();
+});

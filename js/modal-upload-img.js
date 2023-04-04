@@ -1,6 +1,11 @@
 import { isEscapeKey } from './utility.js';
-import { scaleReset, onBiggerButttonClick, onSmallerButttonClick, scaleControlBigger, scaleControlSmaller } from './change-scale.js';
-import { sliderElement, sliderContainer, onEffectsButtonsListClick, effectsButtonsList, onEffectsListClick, effectsReset } from './add-effects.js';
+
+import { scaleReset, onBiggerButttonClick, onSmallerButttonClick,
+  scaleControlBigger, scaleControlSmaller } from './scale.js';
+
+import { sliderElement, sliderContainer, onEffectsButtonsListClick,
+  effectsButtonsList, onEffectsListClick, effectsReset } from './effects.js';
+
 import { form, isValidSend } from './validation.js';
 
 const body = document.querySelector('body');
@@ -14,9 +19,16 @@ const uploadInputReset = () => {
   uploadInput.value = '';
 };
 
+const cleanPristineErrorText = (pristineError) => {
+  pristineError.forEach((elem) => {
+    elem.textContent = '';
+  });
+};
+
 const removeHandlerWhenFocusHashtagField = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
 };
+
 const addHandlerWhenFocusOutHashtagField = () => {
   document.addEventListener('keydown', onDocumentKeydown);
 };
@@ -30,6 +42,9 @@ const addHandlerWhenFocusOutCommentField = () => {
 };
 
 const closeEditImgModal = () => {
+  const pristineError = document.querySelectorAll('.pristine-error');
+
+  cleanPristineErrorText(pristineError);
   editImgForm.classList.add('hidden');
   body.classList.remove('modal-open');
   effectsReset();
@@ -68,13 +83,11 @@ const openEditImgModal = () => {
   form.addEventListener('submit', isValidSend);
 };
 
-uploadInput.addEventListener('change', () => {
-  openEditImgModal();
-});
-
 function onDocumentKeydown(evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeEditImgModal();
   }
 }
+
+export {openEditImgModal, uploadInput};
