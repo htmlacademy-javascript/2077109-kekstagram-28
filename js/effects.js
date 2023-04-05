@@ -1,8 +1,8 @@
 const sliderElement = document.querySelector('.effect-level__slider');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
 const valueElement = document.querySelector('.effect-level__value');
-const effectsButtonsList = document.querySelector('.effects__list');
 const imageElement = document.querySelector('.img-upload__preview img');
+const effectsButtonsList = document.querySelector('.effects__list');
 
 noUiSlider.create(sliderElement, {
   range: {
