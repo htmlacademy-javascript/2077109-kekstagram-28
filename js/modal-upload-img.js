@@ -17,6 +17,8 @@ const commentsField = document.querySelector('.text__description');
 
 const uploadInputReset = () => {
   uploadInput.value = '';
+  hashtagField.value = '';
+  commentsField.value = '';
 };
 
 const cleanPristineErrorText = (pristineError) => {
