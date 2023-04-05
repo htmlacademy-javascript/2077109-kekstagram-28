@@ -1,6 +1,6 @@
 import { isEscapeKey } from './utility.js';
 
-import { scaleReset, onBiggerButttonClick, onSmallerButttonClick,
+import { scaleReset, onBiggerButtonClick, onSmallerButtonClick,
   scaleControlBigger, scaleControlSmaller } from './scale.js';
 
 import { sliderElement, sliderContainer, onEffectsButtonsListClick,
@@ -53,8 +53,8 @@ const closeEditImgModal = () => {
   editImgFormCancel.removeEventListener('click', closeEditImgModal);
   effectsButtonsList.removeEventListener('click', onEffectsButtonsListClick);
   effectsButtonsList.removeEventListener('click', onEffectsListClick);
-  scaleControlSmaller.removeEventListener('click', onSmallerButttonClick);
-  scaleControlBigger.removeEventListener('click', onBiggerButttonClick);
+  scaleControlSmaller.removeEventListener('click', onSmallerButtonClick);
+  scaleControlBigger.removeEventListener('click', onBiggerButtonClick);
   hashtagField.removeEventListener('focus', removeHandlerWhenFocusHashtagField);
   hashtagField.removeEventListener('focusout', addHandlerWhenFocusOutHashtagField);
   commentsField.removeEventListener('focus', removeHandlerWhenFocusCommentField);
@@ -73,8 +73,8 @@ const openEditImgModal = () => {
   editImgFormCancel.addEventListener('click', closeEditImgModal);
   effectsButtonsList.addEventListener('click', onEffectsButtonsListClick);
   effectsButtonsList.addEventListener('click', onEffectsListClick);
-  scaleControlSmaller.addEventListener('click', onSmallerButttonClick);
-  scaleControlBigger.addEventListener('click', onBiggerButttonClick);
+  scaleControlSmaller.addEventListener('click', onSmallerButtonClick);
+  scaleControlBigger.addEventListener('click', onBiggerButtonClick);
   hashtagField.addEventListener('focus', removeHandlerWhenFocusHashtagField);
   hashtagField.addEventListener('focusout', addHandlerWhenFocusOutHashtagField);
   commentsField.addEventListener('focus', removeHandlerWhenFocusCommentField);
