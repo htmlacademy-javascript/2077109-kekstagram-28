@@ -1,6 +1,4 @@
-import {getRandomArrayElement} from './util.js';
-import {getRandomInteger} from './util.js';
-import { idPhoto } from './util.js';
+import { idPhoto, getRandomInteger, getRandomArrayElement } from './utility.js';
 
 const DESCRIPTIONS = [
   'На отдыхе',
