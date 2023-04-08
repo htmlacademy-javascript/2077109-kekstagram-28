@@ -88,4 +88,10 @@ function onDocumentKeydownForm(evt) {
   }
 }
 
-export {openEditImgModal, uploadInput, closeEditImgModal, onDocumentKeydownForm};
+const onUploadInputChange = () => {
+  uploadInput.addEventListener('change', () => {
+    openEditImgModal();
+  });
+};
+
+export {closeEditImgModal, onDocumentKeydownForm, onUploadInputChange};

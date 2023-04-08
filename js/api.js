@@ -1,46 +1,33 @@
-import { unblockSubmitButton, addSuccessMessageListeners, addErrorMessageListeners, showErrorDataMessage} from './form.js';
-
-const getData = (createMiniatures,renderBigPhoto, picturesContainer) => {
-  fetch('https://28.javascript.pages.academy/kekstagram/data')
-    .then((response) => response.json())
-    .then((data) => {
-      createMiniatures(data);
-      renderBigPhoto(data, picturesContainer);
-    })
-    .catch(() => {
-      showErrorDataMessage();
-    });
+const BASE_URL = 'https://28.javascript.pages.academy/kekstagram';
+const Route = {
+  GET_DATA: '/data',
+  SEND_DATA: '/',
+};
+const Method = {
+  GET: 'GET',
+  POST: 'POST',
+};
+const ErrorText = {
+  GET_DATA: 'Не удалось загрузить данные попробуйте обновить страницу',
+  SEND_DATA: 'Не удалось отправить форму. Попробуйте еще раз',
 };
 
-const sendData = (body, onSuccess, successMessage, errorMessage) => {
-  fetch (
-    'https://28.javascript.pages.academy/kekstagram',
-    {
-      method: 'POST',
-      body: body,
-    },
-  )
+const load = (route, errorText, method = Method.GET, body = null) =>
+  fetch(`${BASE_URL}${route}`, {method, body})
     .then((response) => {
-      if (response.ok) {
-        onSuccess();
-        unblockSubmitButton();
-        successMessage();
-        addSuccessMessageListeners();
-
-      } else {
-        errorMessage();
-        addErrorMessageListeners();
-        unblockSubmitButton();
-
+      if (!response.ok) {
+        throw new Error();
       }
+      return response.json();
     })
     .catch(() => {
-      errorMessage();
-      addErrorMessageListeners();
-      unblockSubmitButton();
-
+      throw new Error(errorText);
     });
-};
+
+
+const getData = () => load(Route.GET_DATA, ErrorText.GET_DATA);
+
+const sendData = (body) => load(Route.SEND_DATA, ErrorText.SEND_DATA, Method.POST, body);
+
 
 export {getData, sendData};
-

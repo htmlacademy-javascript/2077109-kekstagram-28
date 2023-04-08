@@ -1,10 +1,27 @@
 import { createMiniatures, picturesContainer } from './miniatures.js';
 import { renderBigPhoto } from './full-size-photo.js';
-import {openEditImgModal, uploadInput} from './modal-upload-img.js';
-import { getData } from './api.js';
+import { getData, sendData } from './api.js';
+import { setUserFormSubmit, showSuccessMessage, showErrorMessage, addSuccessMessageListeners, addErrorMessageListeners, showAlert } from './form.js';
+import { closeEditImgModal, onUploadInputChange } from './modal-upload-img.js';
 
-uploadInput.addEventListener('change', () => {
-  openEditImgModal();
+onUploadInputChange();
+
+setUserFormSubmit(async (data) => {
+  try {
+    await sendData(data);
+    closeEditImgModal();
+    showSuccessMessage();
+    addSuccessMessageListeners();
+  } catch {
+    showErrorMessage();
+    addErrorMessageListeners();
+  }
 });
 
-getData(createMiniatures, renderBigPhoto, picturesContainer);
+try {
+  const data = await getData();
+  createMiniatures(data);
+  renderBigPhoto(data, picturesContainer);
+} catch (err) {
+  showAlert(err.message);
+}

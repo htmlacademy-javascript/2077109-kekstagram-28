@@ -1,9 +1,7 @@
-import { closeEditImgModal } from './modal-upload-img.js';
-import './modal-upload-img.js';
 import { isEscapeKey } from './utility.js';
 import { onDocumentKeydownForm } from './modal-upload-img.js';
-import { sendData } from './api.js';
 
+const ALERT_SHOW_TIME = 5000;
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const TAG_ERROR_TEXT = 'Неправильно заполнены хэштеги';
@@ -18,8 +16,6 @@ const templateSuccess = document.querySelector('#success').content;
 const successMessageFragment = document.createDocumentFragment();
 const templateError = document.querySelector('#error').content;
 const errorMessageFragment = document.createDocumentFragment();
-const templateErrorData = document.querySelector('#data-error').content;
-const errorDataMessageFragment = document.createDocumentFragment();
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -104,11 +100,25 @@ const addSuccessMessageListeners = () => {
   document.addEventListener('click', closeSuccessMessage);
 };
 
-const showErrorDataMessage = () => {
-  const errorDataMessageElement = templateErrorData.cloneNode(true);
-  errorDataMessageFragment.appendChild(errorDataMessageElement);
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = '100';
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = '0';
+  alertContainer.style.top = '0';
+  alertContainer.style.right = '0';
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '30px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'red';
 
-  return body.appendChild(errorDataMessageFragment);
+  alertContainer.textContent = message;
+
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
 };
 
 function onDocumentKeydownSuccessMessage(evt) {
@@ -135,21 +145,16 @@ const unblockSubmitButton = () => {
   submitButton.textContent = 'Опубликовать';
 };
 
-const setUserFormSubmit = (onSuccess) => {
-
-  form.addEventListener('submit', (evt) => {
-
+const setUserFormSubmit = (cb) => {
+  form.addEventListener('submit', async (evt) => {
     evt.preventDefault();
 
     if (pristine.validate() === true) {
-      const formData = new FormData(evt.target);
       blockSubmitButton();
-
-      sendData(formData, onSuccess, showSuccessMessage, showErrorMessage);
+      await cb(new FormData(form));
+      unblockSubmitButton();
     }
   });
 };
 
-setUserFormSubmit(closeEditImgModal);
-
-export {unblockSubmitButton, addSuccessMessageListeners, addErrorMessageListeners, showErrorDataMessage};
+export {setUserFormSubmit, showSuccessMessage, showErrorMessage, addSuccessMessageListeners, addErrorMessageListeners, showAlert};
