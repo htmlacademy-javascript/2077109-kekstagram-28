@@ -1,8 +1,8 @@
 import { isEscapeKey } from './utility.js';
 import { onDocumentKeydownForm } from './modal-upload-img.js';
 
-const ALERT_SHOW_TIME = 5000;
 const MAX_HASHTAG_COUNT = 5;
+const ALERT_SHOW_TIME = 5000;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const TAG_ERROR_TEXT = 'Неправильно заполнены хэштеги';
 const MAX_LENGTH_COMMENT = 140;
