@@ -3,10 +3,8 @@ import { isEscapeKey } from './utility.js';
 import { scaleReset, onBiggerButtonClick, onSmallerButtonClick,
   scaleControlBigger, scaleControlSmaller } from './scale.js';
 
-import { sliderElement, sliderContainer, onEffectsButtonsListClick,
+import { sliderElement, sliderContainer,
   effectsButtonsList, onEffectsListClick, effectsReset } from './effects.js';
-
-import { form, isValidSend } from './validation.js';
 
 const body = document.querySelector('body');
 const uploadInput = document.querySelector('.img-upload__input');
@@ -14,11 +12,13 @@ const editImgForm = document.querySelector('.img-upload__overlay');
 const editImgFormCancel = document.querySelector('.img-upload__cancel');
 const hashtagField = document.querySelector('.text__hashtags');
 const commentsField = document.querySelector('.text__description');
+const input = document.querySelector('.effects__radio ');
 
 const uploadInputReset = () => {
   uploadInput.value = '';
   hashtagField.value = '';
   commentsField.value = '';
+  input.checked = true;
 };
 
 const cleanPristineErrorText = (pristineError) => {
@@ -28,19 +28,19 @@ const cleanPristineErrorText = (pristineError) => {
 };
 
 const removeHandlerWhenFocusHashtagField = () => {
-  document.removeEventListener('keydown', onDocumentKeydown);
+  document.removeEventListener('keydown', onDocumentKeydownForm);
 };
 
 const addHandlerWhenFocusOutHashtagField = () => {
-  document.addEventListener('keydown', onDocumentKeydown);
+  document.addEventListener('keydown', onDocumentKeydownForm);
 };
 
 const removeHandlerWhenFocusCommentField = () => {
-  document.removeEventListener('keydown', onDocumentKeydown);
+  document.removeEventListener('keydown', onDocumentKeydownForm);
 };
 
 const addHandlerWhenFocusOutCommentField = () => {
-  document.addEventListener('keydown', onDocumentKeydown);
+  document.addEventListener('keydown', onDocumentKeydownForm);
 };
 
 const closeEditImgModal = () => {
@@ -53,7 +53,6 @@ const closeEditImgModal = () => {
   uploadInputReset();
 
   editImgFormCancel.removeEventListener('click', closeEditImgModal);
-  effectsButtonsList.removeEventListener('click', onEffectsButtonsListClick);
   effectsButtonsList.removeEventListener('click', onEffectsListClick);
   scaleControlSmaller.removeEventListener('click', onSmallerButtonClick);
   scaleControlBigger.removeEventListener('click', onBiggerButtonClick);
@@ -61,8 +60,7 @@ const closeEditImgModal = () => {
   hashtagField.removeEventListener('focusout', addHandlerWhenFocusOutHashtagField);
   commentsField.removeEventListener('focus', removeHandlerWhenFocusCommentField);
   commentsField.removeEventListener('focusout', addHandlerWhenFocusOutCommentField);
-  document.removeEventListener('keydown', onDocumentKeydown);
-  form.removeEventListener('submit', isValidSend);
+  document.removeEventListener('keydown', onDocumentKeydownForm);
 };
 
 const openEditImgModal = () => {
@@ -73,7 +71,6 @@ const openEditImgModal = () => {
   sliderContainer.classList.add('hidden');
 
   editImgFormCancel.addEventListener('click', closeEditImgModal);
-  effectsButtonsList.addEventListener('click', onEffectsButtonsListClick);
   effectsButtonsList.addEventListener('click', onEffectsListClick);
   scaleControlSmaller.addEventListener('click', onSmallerButtonClick);
   scaleControlBigger.addEventListener('click', onBiggerButtonClick);
@@ -81,15 +78,20 @@ const openEditImgModal = () => {
   hashtagField.addEventListener('focusout', addHandlerWhenFocusOutHashtagField);
   commentsField.addEventListener('focus', removeHandlerWhenFocusCommentField);
   commentsField.addEventListener('focusout', addHandlerWhenFocusOutCommentField);
-  document.addEventListener('keydown', onDocumentKeydown);
-  form.addEventListener('submit', isValidSend);
+  document.addEventListener('keydown', onDocumentKeydownForm);
 };
 
-function onDocumentKeydown(evt) {
+function onDocumentKeydownForm(evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeEditImgModal();
   }
 }
 
-export {openEditImgModal, uploadInput};
+const onUploadInputChange = () => {
+  uploadInput.addEventListener('change', () => {
+    openEditImgModal();
+  });
+};
+
+export {closeEditImgModal, onDocumentKeydownForm, onUploadInputChange};

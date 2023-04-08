@@ -1,8 +1,8 @@
 const sliderElement = document.querySelector('.effect-level__slider');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
 const valueElement = document.querySelector('.effect-level__value');
-const imageElement = document.querySelector('.img-upload__preview img');
 const effectsButtonsList = document.querySelector('.effects__list');
+const imageElement = document.querySelector('.img-upload__preview img');
 
 noUiSlider.create(sliderElement, {
   range: {
@@ -19,25 +19,19 @@ const sliderReset = () => {
   sliderContainer.classList.remove('hidden');
 };
 
-const onEffectsButtonsListClick = (evt) => {
+const onEffectsListClick = (evt) => {
   const target = evt.target.closest('.effects__item').querySelector('.effects__radio ');
   evt.preventDefault();
-  if (target) {
+
+  if (target.id === 'effect-none') {
     target.checked = true;
-  }
-};
-
-const onEffectsListClick = (evt) => {
-  const target = evt.target.closest('.effects__item').querySelector('.effects__radio ').id;
-  evt.preventDefault();
-
-  if (target === 'effect-none') {
     imageElement.className = 'effects__preview--effect-none';
     imageElement.style.removeProperty('filter');
     sliderElement.classList.add('hidden');
     sliderContainer.classList.add('hidden');
 
-  } else if (target === 'effect-chrome') {
+  } else if (target.id === 'effect-chrome') {
+    target.checked = true;
     imageElement.className = 'effects__preview--chrome';
     sliderReset();
     sliderElement.noUiSlider.updateOptions ({
@@ -55,7 +49,8 @@ const onEffectsListClick = (evt) => {
       imageElement.style.setProperty('filter', `grayscale(${valueElement.value})`);
     });
 
-  } else if (target === 'effect-sepia') {
+  } else if (target.id === 'effect-sepia') {
+    target.checked = true;
     imageElement.className = 'effects__preview--sepia';
     sliderReset();
     sliderElement.noUiSlider.updateOptions ({
@@ -73,7 +68,8 @@ const onEffectsListClick = (evt) => {
       imageElement.style.setProperty('filter', `sepia(${valueElement.value})`);
     });
 
-  } else if (target === 'effect-marvin') {
+  } else if (target.id === 'effect-marvin') {
+    target.checked = true;
     imageElement.className = 'effects__preview--marvin';
     sliderReset();
     sliderElement.noUiSlider.updateOptions ({
@@ -91,7 +87,8 @@ const onEffectsListClick = (evt) => {
       imageElement.style.setProperty('filter', `invert(${valueElement.value}%)`);
     });
 
-  } else if (target === 'effect-phobos') {
+  } else if (target.id === 'effect-phobos') {
+    target.checked = true;
     imageElement.className = 'effects__preview--phobos';
     sliderReset();
     sliderElement.noUiSlider.updateOptions ({
@@ -109,7 +106,8 @@ const onEffectsListClick = (evt) => {
       imageElement.style.setProperty('filter', `blur(${valueElement.value}px)`);
     });
 
-  } else if (target === 'effect-heat') {
+  } else if (target.id === 'effect-heat') {
+    target.checked = true;
     imageElement.className = 'effects__preview--heat';
     sliderReset();
     sliderElement.noUiSlider.updateOptions ({
@@ -133,4 +131,4 @@ const effectsReset = () => {
   imageElement.style.removeProperty('filter');
 };
 
-export {sliderElement, sliderContainer, onEffectsButtonsListClick, effectsButtonsList, onEffectsListClick, effectsReset};
+export {sliderElement, sliderContainer, effectsButtonsList, onEffectsListClick, effectsReset};
