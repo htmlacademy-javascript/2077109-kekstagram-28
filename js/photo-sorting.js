@@ -10,7 +10,7 @@ const filterElement = document.querySelector('.img-filters');
 let currentFilter = Filter.DEFAULT;
 let pictures = [];
 
-const sortRandomonly = () => Math.random() - 0.5;
+const sortRandomOnly = () => Math.random() - 0.5;
 
 const sortByComments = (pictureA, pictureB) =>
   pictureB.comments.length - pictureA.comments.length;
@@ -19,7 +19,7 @@ const sortByComments = (pictureA, pictureB) =>
 const getFilteredPictures = () => {
   switch (currentFilter) {
     case Filter.RANDOM:
-      return [...pictures].sort(sortRandomonly).slice(0, PICTURES_COUNT);
+      return [...pictures].sort(sortRandomOnly).slice(0, PICTURES_COUNT);
     case Filter.DISCUSSED:
       return [...pictures].sort(sortByComments);
     default:
@@ -47,9 +47,9 @@ const setOnFilterClick = (callback) => {
   });
 };
 
-const init = (loadedPictures, callback) => {
+const initSort = (loadedPictures, callback) => {
   pictures = [...loadedPictures];
   setOnFilterClick(callback);
 };
 
-export {init};
+export {initSort};
