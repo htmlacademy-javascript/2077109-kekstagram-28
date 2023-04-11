@@ -4,7 +4,7 @@ import { renderBigPhoto } from './full-size-photo.js';
 import { createMiniatures } from './miniatures.js';
 import { loadUserPhoto } from './photo-preview.js';
 import { getData, sendData } from './api.js';
-import { init } from './photo-sorting.js';
+import { initSort } from './photo-sorting.js';
 import { debounce } from './utility.js';
 
 setUserFormSubmit(async (data) => {
@@ -25,7 +25,7 @@ try {
   createMiniatures(data);
   renderBigPhoto(data);
   loadUserPhoto();
-  init (data, debounce(createMiniatures, 500));
+  initSort (data, debounce(createMiniatures, 500));
 } catch (err) {
   showAlert(err.message);
 }
