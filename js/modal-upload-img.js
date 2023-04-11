@@ -1,10 +1,6 @@
+import { scaleReset, onBiggerButtonClick, onSmallerButtonClick, scaleControlBigger, scaleControlSmaller } from './scale.js';
+import { sliderElement, sliderContainer, effectsButtonsList, onEffectsListClick, effectsReset } from './effects.js';
 import { isEscapeKey } from './utility.js';
-
-import { scaleReset, onBiggerButtonClick, onSmallerButtonClick,
-  scaleControlBigger, scaleControlSmaller } from './scale.js';
-
-import { sliderElement, sliderContainer,
-  effectsButtonsList, onEffectsListClick, effectsReset } from './effects.js';
 
 const body = document.querySelector('body');
 const uploadInput = document.querySelector('.img-upload__input');
@@ -45,7 +41,6 @@ const addHandlerWhenFocusOutCommentField = () => {
 
 const closeEditImgModal = () => {
   const pristineError = document.querySelectorAll('.pristine-error');
-
   cleanPristineErrorText(pristineError);
   editImgForm.classList.add('hidden');
   body.classList.remove('modal-open');

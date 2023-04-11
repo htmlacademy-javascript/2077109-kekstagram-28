@@ -1,5 +1,6 @@
 import { clearComments, isEscapeKey } from './utility.js';
 
+const COMMENT_IN_BLOCK = 5;
 const bigPictureModal = document.querySelector('.big-picture');
 const bigPictureModalImg = bigPictureModal.querySelector('.big-picture__img').querySelector('img');
 const likesCount = bigPictureModal.querySelector('.likes-count');
@@ -11,9 +12,8 @@ const commentLoader = bigPictureModal.querySelector('.comments-loader');
 const body = document.querySelector('body');
 const bigPictureModalCancel = document.querySelector('.big-picture__cancel');
 const templateComment = document.querySelector('#comments').content;
+const picturesContainer = document.querySelector('.pictures');
 let currentDescription;
-
-const COMMENT_IN_BLOCK = 5;
 let commentsShown = 0;
 
 const renderComments = (arrayCommentsElement) => {
@@ -72,8 +72,8 @@ const openBigPictureModal = () => {
   bigPictureModalCancel.addEventListener('click', closeBigPictureModal);
 };
 
-const renderBigPhoto = (arrayPictures, container) => {
-  container.addEventListener('click', (evt) => {
+const renderBigPhoto = (arrayPictures) => {
+  picturesContainer.addEventListener('click', (evt) => {
     const target = evt.target.closest('.picture');
     if (target) {
       currentDescription = arrayPictures.find((item) => item.id === Number(target.dataset.pictureId));

@@ -3,7 +3,6 @@ const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const TAG_ERROR_TEXT = 'Неправильно заполнены хэштеги';
 const MAX_LENGTH_COMMENT = 140;
 const COMMENT_ERROR_TEXT = 'Длинна комментария не может быть больше 140 символов';
-
 const form = document.querySelector('.img-upload__form');
 const hashtagField = document.querySelector('.text__hashtags');
 const commentsField = document.querySelector('.text__description');

@@ -1,10 +1,11 @@
-import { createMiniatures, picturesContainer } from './miniatures.js';
-import { renderBigPhoto } from './full-size-photo.js';
-import { getData, sendData } from './api.js';
 import { setUserFormSubmit, showSuccessMessage, showErrorMessage, addSuccessMessageListeners, addErrorMessageListeners, showAlert } from './form.js';
 import { closeEditImgModal, onUploadInputChange } from './modal-upload-img.js';
-
-onUploadInputChange();
+import { renderBigPhoto } from './full-size-photo.js';
+import { createMiniatures } from './miniatures.js';
+import { loadUserPhoto } from './photo-preview.js';
+import { getData, sendData } from './api.js';
+import { init } from './photo-sorting.js';
+import { debounce } from './utility.js';
 
 setUserFormSubmit(async (data) => {
   try {
@@ -19,9 +20,12 @@ setUserFormSubmit(async (data) => {
 });
 
 try {
+  onUploadInputChange();
   const data = await getData();
   createMiniatures(data);
-  renderBigPhoto(data, picturesContainer);
+  renderBigPhoto(data);
+  loadUserPhoto();
+  init (data, debounce(createMiniatures, 500));
 } catch (err) {
   showAlert(err.message);
 }
