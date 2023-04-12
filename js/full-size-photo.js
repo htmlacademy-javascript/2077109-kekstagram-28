@@ -78,7 +78,7 @@ const renderBigPhoto = (arrayPictures) => {
     if (target) {
       currentDescription = arrayPictures.find((item) => item.id === Number(target.dataset.pictureId));
       bigPictureModalImg.src = currentDescription.url;
-      commentsCount.textContent = currentDescription.comments.length.toString;
+      commentsCount.textContent = currentDescription.comments.length.toString();
       likesCount.textContent = currentDescription.likes;
       socialCaption.textContent = currentDescription.description;
       createButtonCommentLoads();
