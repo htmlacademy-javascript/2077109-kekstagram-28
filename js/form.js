@@ -149,7 +149,7 @@ const setUserFormSubmit = (cb) => {
   form.addEventListener('submit', async (evt) => {
     evt.preventDefault();
 
-    if (pristine.validate() === true) {
+    if (pristine.validate()) {
       blockSubmitButton();
       await cb(new FormData(form));
       unblockSubmitButton();
