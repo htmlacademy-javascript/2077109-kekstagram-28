@@ -25,21 +25,21 @@ const pristine = new Pristine(form, {
 
 const isValidTag = (tag) => VALID_SYMBOLS.test(tag);
 
-const gethastagValidCount = (tags) => tags.length <= MAX_HASHTAG_COUNT;
+const getHastagValidCount = (tags) => tags.length <= MAX_HASHTAG_COUNT;
 
-const gethasUniqueTags = (tags) => {
+const getUniqueHastags = (tags) => {
   const lowerCaseTags = tags.map((tag) => tag.toLowerCase());
   return lowerCaseTags.length === new Set(lowerCaseTags).size;
 };
 
-const getvalidateTags = (value) => {
+const getValidateTags = (value) => {
   const tags = value.trim().split(' ').filter((tag) => tag.trim().length);
-  return gethastagValidCount(tags) && gethasUniqueTags(tags) && tags.every(isValidTag);
+  return getHastagValidCount(tags) && getUniqueHastags(tags) && tags.every(isValidTag);
 };
 
 pristine.addValidator(
   hashtagField,
-  getvalidateTags,
+  getValidateTags,
   TAG_ERROR_TEXT
 );
 

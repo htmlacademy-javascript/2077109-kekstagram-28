@@ -19,13 +19,14 @@ setUserFormSubmit(async (data) => {
   }
 });
 
-try {
+getData().then((data) => {
   onUploadInputChange();
-  const data = await getData();
   createMiniatures(data);
   renderBigPhoto(data);
   loadUserPhoto();
   initSort (data, debounce(createMiniatures, 500));
-} catch (err) {
+
+}).catch((err) => {
   showAlert(err.message);
-}
+});
+
